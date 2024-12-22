@@ -1,6 +1,11 @@
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
-import { PropsWithChildren } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { PropsWithChildren, useEffect } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
@@ -9,17 +14,31 @@ type Props = PropsWithChildren<{
 
 export default function EmojiPicker({ isVisible, children, onClose }: Props) {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
-      <View style={styles.modalContent}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Choose a sticker</Text>
-          <Pressable onPress={onClose}>
-            <MaterialIcons name="close" color="#fff" size={22} />
-          </Pressable>
-        </View>
-        {children}
-      </View>
-    </Modal>
+    // <Modal
+    //   animationType="slide"
+    //   transparent={true}
+    //   visible={isVisible}
+    //   presentationStyle="formSheet"
+    // >
+    <>
+      {isVisible && (
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          style={styles.modalContent}
+        >
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Choose a sticker</Text>
+            <Pressable onPress={onClose}>
+              <MaterialIcons name="close" color="#fff" size={22} />
+            </Pressable>
+          </View>
+          {children}
+        </Animated.View>
+      )}
+    </>
+
+    // </Modal>
   );
 }
 
@@ -30,8 +49,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#25292e',
     borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
-    position: 'absolute',
-    bottom: 0,
+    position: 'fixed',
+    top: 0,
   },
   titleContainer: {
     height: '16%',

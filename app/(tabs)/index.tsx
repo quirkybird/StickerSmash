@@ -85,15 +85,16 @@ export default function Index() {
               selectedImage={selectedImage}
             />
             {pickedEmojis.length > 0 && (
-              <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+              <>
                 {pickedEmojis.map((emoji, index) => (
                   <EmojiSticker
                     imageSize={80}
-                    key={`sticker-${index}-${Date.now()}`}
+                    id={`sticker-${index}`}
+                    key={`sticker-${index}`}
                     stickerSource={emoji}
                   />
                 ))}
-              </View>
+              </>
             )}
           </View>
         </View>
