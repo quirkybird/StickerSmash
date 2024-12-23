@@ -6,6 +6,7 @@ import Animated, {
   FadeOut,
   useSharedValue,
 } from 'react-native-reanimated';
+import React from 'react';
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
